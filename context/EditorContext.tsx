@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-export type ElementType = "text" | "image";
+export type ElementType = 'text' | 'image';
 
 export interface TemplateElement {
   id: string;
@@ -15,15 +15,19 @@ export interface TemplateElement {
   fontSize?: number;
   fontWeight?: string;
   color?: string;
-  textAlign?: "left" | "center" | "right";
+  textAlign?: 'left' | 'center' | 'right';
 }
 
 export interface PageSetup {
-  format: "A4" | "Letter" | "Custom";
-  orientation: "landscape" | "portrait";
+  format: 'A4' | 'Letter' | 'Custom';
+  orientation: 'landscape' | 'portrait';
   width: number; // in pixels (at 96dpi or similar for preview)
   height: number;
   backgroundUrl: string | null;
+  bgX?: number;
+  bgY?: number;
+  bgWidth?: number;
+  bgHeight?: number;
 }
 
 interface HistoryState {
@@ -38,7 +42,7 @@ interface EditorContextType {
   setElements: React.Dispatch<React.SetStateAction<TemplateElement[]>>;
   selectedElementId: string | null;
   setSelectedElementId: React.Dispatch<React.SetStateAction<string | null>>;
-  addElement: (element: Omit<TemplateElement, "id">) => void;
+  addElement: (element: Omit<TemplateElement, 'id'>) => void;
   updateElement: (id: string, updates: Partial<TemplateElement>) => void;
   removeElement: (id: string) => void;
   takeSnapshot: () => void;
@@ -49,8 +53,8 @@ interface EditorContextType {
 }
 
 const defaultPageSetup: PageSetup = {
-  format: "A4",
-  orientation: "landscape",
+  format: 'A4',
+  orientation: 'landscape',
   width: 1123, // A4 Landscape at 96 DPI: 1123x794
   height: 794,
   backgroundUrl: null,
@@ -61,7 +65,9 @@ const EditorContext = createContext<EditorContextType | undefined>(undefined);
 export const EditorProvider = ({ children }: { children: ReactNode }) => {
   const [pageSetup, setPageSetup] = useState<PageSetup>(defaultPageSetup);
   const [elements, setElements] = useState<TemplateElement[]>([]);
-  const [selectedElementId, setSelectedElementId] = useState<string | null>(null);
+  const [selectedElementId, setSelectedElementId] = useState<string | null>(
+    null,
+  );
 
   const [past, setPast] = useState<HistoryState[]>([]);
   const [future, setFuture] = useState<HistoryState[]>([]);
@@ -75,7 +81,7 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
     if (past.length === 0) return;
     const previous = past[past.length - 1];
     const newPast = past.slice(0, past.length - 1);
-    
+
     setFuture((prev) => [{ elements, pageSetup }, ...prev]);
     setPast(newPast);
     setElements(previous.elements);
@@ -86,14 +92,14 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
     if (future.length === 0) return;
     const next = future[0];
     const newFuture = future.slice(1);
-    
+
     setPast((prev) => [...prev, { elements, pageSetup }]);
     setFuture(newFuture);
     setElements(next.elements);
     setPageSetup(next.pageSetup);
   };
 
-  const addElement = (element: Omit<TemplateElement, "id">) => {
+  const addElement = (element: Omit<TemplateElement, 'id'>) => {
     takeSnapshot();
     const newElement: TemplateElement = {
       ...element,
@@ -105,12 +111,12 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
 
   const updateElement = (id: string, updates: Partial<TemplateElement>) => {
     setElements((prev) =>
-      prev.map((el) => (el.id === id ? { ...el, ...updates } : el))
+      prev.map((el) => (el.id === id ? { ...el, ...updates } : el)),
     );
   };
 
   const removeElement = (id: string) => {
-    if (elements.some(el => el.id === id)) {
+    if (elements.some((el) => el.id === id)) {
       takeSnapshot();
       setElements((prev) => prev.filter((el) => el.id !== id));
       if (selectedElementId === id) setSelectedElementId(null);
@@ -144,7 +150,7 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
 export const useEditor = () => {
   const context = useContext(EditorContext);
   if (!context) {
-    throw new Error("useEditor must be used within an EditorProvider");
+    throw new Error('useEditor must be used within an EditorProvider');
   }
   return context;
 };

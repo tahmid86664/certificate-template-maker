@@ -1,17 +1,26 @@
-"use client";
+'use client';
 
-import { useEditor } from "@/context/EditorContext";
-import { Type, Image as ImageIcon, Briefcase, FileType, CheckSquare, Hash, Calendar, GraduationCap } from "lucide-react";
+import { useEditor } from '@/context/EditorContext';
+import {
+  Type,
+  Image as ImageIcon,
+  Briefcase,
+  FileType,
+  CheckSquare,
+  Hash,
+  Calendar,
+  GraduationCap,
+} from 'lucide-react';
 
 const componentsList = [
-  { label: "Full Name", content: "{{full_name}}", icon: Type },
-  { label: "Roll No.", content: "{{roll}}", icon: Hash },
-  { label: "Class", content: "{{class}}", icon: GraduationCap },
-  { label: "Section", content: "{{section}}", icon: Briefcase },
-  { label: "ID Number", content: "{{id_number}}", icon: FileType },
-  { label: "Reg. Number", content: "{{registration_number}}", icon: Hash },
-  { label: "Date", content: "{{date}}", icon: Calendar },
-  { label: "Custom Text", content: "Double click to edit", icon: Type },
+  { label: 'Full Name', content: '{{full_name}}', icon: Type },
+  { label: 'Roll No.', content: '{{roll}}', icon: Hash },
+  { label: 'Class', content: '{{class}}', icon: GraduationCap },
+  { label: 'Section', content: '{{section}}', icon: Briefcase },
+  { label: 'ID Number', content: '{{id_number}}', icon: FileType },
+  { label: 'Reg. Number', content: '{{registration_number}}', icon: Hash },
+  { label: 'Date', content: '{{date}}', icon: Calendar },
+  { label: 'Custom Text', content: 'Double click to edit', icon: Type },
 ];
 
 export default function Sidebar() {
@@ -19,27 +28,30 @@ export default function Sidebar() {
 
   const handleAddText = (content: string) => {
     addElement({
-      type: "text",
+      type: 'text',
       content,
       x: 100,
       y: 100,
       width: 200,
       height: 40,
       fontSize: 24,
-      color: "#000000",
-      textAlign: "left",
-      fontWeight: "normal",
+      color: '#000000',
+      textAlign: 'left',
+      fontWeight: 'normal',
     });
   };
 
-  const handleAddImage = (type: "logo" | "signature") => {
+  const handleAddImage = (type: 'logo' | 'signature') => {
     addElement({
-      type: "image",
-      content: type === "logo" ? "https://placehold.co/150x150?text=Logo" : "https://placehold.co/200x80?text=Signature",
+      type: 'image',
+      content:
+        type === 'logo'
+          ? 'https://placehold.co/150x150/png?text=Logo'
+          : 'https://placehold.co/200x80/png?text=Signature',
       x: 100,
       y: 100,
-      width: type === "logo" ? 100 : 150,
-      height: type === "logo" ? 100 : 60,
+      width: type === 'logo' ? 100 : 150,
+      height: type === 'logo' ? 100 : 60,
     });
   };
 
@@ -67,14 +79,14 @@ export default function Sidebar() {
         <h2 className="font-semibold text-gray-800 mb-3">Images</h2>
         <div className="flex gap-2">
           <button
-            onClick={() => handleAddImage("logo")}
+            onClick={() => handleAddImage('logo')}
             className="flex-1 flex flex-col items-center justify-center gap-1 p-2 bg-gray-50 border border-gray-200 rounded hover:bg-gray-100 transition text-xs text-gray-900"
           >
             <ImageIcon size={18} className="text-gray-700" />
             Logo
           </button>
           <button
-            onClick={() => handleAddImage("signature")}
+            onClick={() => handleAddImage('signature')}
             className="flex-1 flex flex-col items-center justify-center gap-1 p-2 bg-gray-50 border border-gray-200 rounded hover:bg-gray-100 transition text-xs text-gray-900"
           >
             <CheckSquare size={18} className="text-gray-700" />

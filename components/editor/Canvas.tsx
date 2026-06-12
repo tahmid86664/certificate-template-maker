@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 export default function Canvas() {
   const {
     pageSetup,
+    setPageSetup,
     elements,
     updateElement,
     selectedElementId,
@@ -74,6 +75,7 @@ export default function Canvas() {
         <img
           src={el.content}
           alt="element"
+          crossOrigin="anonymous"
           className="w-full h-full object-contain pointer-events-none"
         />
       );
@@ -86,17 +88,64 @@ export default function Canvas() {
       style={{
         width: `${pageSetup.width}px`,
         height: `${pageSetup.height}px`,
-        backgroundImage: pageSetup.backgroundUrl
-          ? `url(${pageSetup.backgroundUrl})`
-          : undefined,
-        backgroundSize: '100% 100%',
-        backgroundPosition: 'center',
         transform: `scale(${scale})`,
         transformOrigin: 'top center',
       }}
       id="template-canvas"
       onClick={() => setSelectedElementId(null)}
     >
+      {pageSetup.backgroundUrl && (
+        <Rnd
+          key="background-rnd"
+          size={{
+            width: pageSetup.bgWidth ?? pageSetup.width,
+            height: pageSetup.bgHeight ?? pageSetup.height,
+          }}
+          position={{
+            x: pageSetup.bgX ?? 0,
+            y: pageSetup.bgY ?? 0,
+          }}
+          onDragStart={() => takeSnapshot()}
+          onDragStop={(e, d) => {
+            setPageSetup((prev) => ({ ...prev, bgX: d.x, bgY: d.y }));
+          }}
+          onResizeStart={() => takeSnapshot()}
+          onResizeStop={(e, direction, ref, delta, position) => {
+            setPageSetup((prev) => ({
+              ...prev,
+              bgWidth: parseInt(ref.style.width, 10),
+              bgHeight: parseInt(ref.style.height, 10),
+              bgX: position.x,
+              bgY: position.y,
+            }));
+          }}
+          bounds="parent"
+          onClick={(e: React.MouseEvent) => {
+            e.stopPropagation();
+            setSelectedElementId('background');
+          }}
+          style={{
+            border:
+              selectedElementId === 'background'
+                ? '2px solid #3b82f6'
+                : '1px dashed transparent',
+            zIndex: 0,
+            outline: 'none',
+          }}
+          className={`group hover:border-blue-300 ${
+            selectedElementId === 'background' ? '!border-blue-500' : ''
+          }`}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={pageSetup.backgroundUrl}
+            alt="background"
+            crossOrigin="anonymous"
+            className="w-full h-full object-fill pointer-events-none"
+          />
+        </Rnd>
+      )}
+
       {elements.map((el) => (
         <Rnd
           key={el.id}

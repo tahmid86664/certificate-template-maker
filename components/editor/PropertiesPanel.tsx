@@ -18,10 +18,17 @@ export default function PropertiesPanel() {
 
   const handleBgUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     takeSnapshot();
-    setPageSetup({ ...pageSetup, backgroundUrl: e.target.value });
+    setPageSetup({
+      ...pageSetup,
+      backgroundUrl: e.target.value,
+      bgWidth: pageSetup.width,
+      bgHeight: pageSetup.height,
+      bgX: 0,
+      bgY: 0,
+    });
   };
 
-  if (!selectedElement) {
+  if (!selectedElement && selectedElementId !== 'background') {
     return (
       <div className="w-64 bg-white border-l border-gray-200 p-4 shrink-0 shadow-sm z-10 overflow-y-auto hidden md:block">
         <h2 className="font-semibold text-gray-800 mb-4 border-b border-gray-100 pb-2">
@@ -62,6 +69,99 @@ export default function PropertiesPanel() {
       </div>
     );
   }
+
+  if (selectedElementId === 'background') {
+    return (
+      <div className="w-64 bg-white border-l border-gray-200 p-4 shrink-0 shadow-sm z-10 overflow-y-auto">
+        <div className="flex items-center justify-between font-semibold text-gray-800 mb-4 border-b border-gray-100 pb-2">
+          <h2>Background Properties</h2>
+          <button
+            onClick={() => {
+              takeSnapshot();
+              setPageSetup({ ...pageSetup, backgroundUrl: null });
+            }}
+            className="text-red-500 hover:text-red-700 p-1 hover:bg-red-50 rounded"
+            title="Delete Background"
+          >
+            <Trash2 size={16} />
+          </button>
+        </div>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-900 mb-1">
+              Background Image URL
+            </label>
+            <input
+              onFocus={() => takeSnapshot()}
+              type="text"
+              value={pageSetup.backgroundUrl || ''}
+              onChange={handleBgUrlChange}
+              placeholder="https://example.com/bg.png"
+              className="w-full text-sm text-gray-900 border border-gray-300 rounded p-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-gray-100">
+            <div>
+              <label className="block text-xs text-gray-700 mb-1">Width</label>
+              <input
+                type="number"
+                onFocus={() => takeSnapshot()}
+                value={Math.round(pageSetup.bgWidth ?? pageSetup.width)}
+                onChange={(e) =>
+                  setPageSetup({
+                    ...pageSetup,
+                    bgWidth: Number(e.target.value),
+                  })
+                }
+                className="w-full text-sm text-gray-900 border border-gray-300 rounded p-1"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-700 mb-1">Height</label>
+              <input
+                type="number"
+                onFocus={() => takeSnapshot()}
+                value={Math.round(pageSetup.bgHeight ?? pageSetup.height)}
+                onChange={(e) =>
+                  setPageSetup({
+                    ...pageSetup,
+                    bgHeight: Number(e.target.value),
+                  })
+                }
+                className="w-full text-sm text-gray-900 border border-gray-300 rounded p-1"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-700 mb-1">X Pos</label>
+              <input
+                type="number"
+                onFocus={() => takeSnapshot()}
+                value={Math.round(pageSetup.bgX ?? 0)}
+                onChange={(e) =>
+                  setPageSetup({ ...pageSetup, bgX: Number(e.target.value) })
+                }
+                className="w-full text-sm text-gray-900 border border-gray-300 rounded p-1"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-700 mb-1">Y Pos</label>
+              <input
+                type="number"
+                onFocus={() => takeSnapshot()}
+                value={Math.round(pageSetup.bgY ?? 0)}
+                onChange={(e) =>
+                  setPageSetup({ ...pageSetup, bgY: Number(e.target.value) })
+                }
+                className="w-full text-sm text-gray-900 border border-gray-300 rounded p-1"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!selectedElement) return null;
 
   return (
     <div className="w-64 bg-white border-l border-gray-200 p-4 shrink-0 shadow-sm z-10 overflow-y-auto">

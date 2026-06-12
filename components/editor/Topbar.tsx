@@ -29,6 +29,12 @@ export default function Topbar() {
       const canvas = await toCanvas(canvasNode, {
         quality: 1,
         pixelRatio: 2,
+        backgroundColor: '#ffffff',
+        cacheBust: true,
+        style: {
+          transform: 'scale(1)',
+          transformOrigin: 'top left',
+        },
       });
       const imgData = canvas.toDataURL('image/png');
 
