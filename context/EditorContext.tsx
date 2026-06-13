@@ -6,6 +6,7 @@ export type ElementType = 'text' | 'image';
 
 export interface TemplateElement {
   id: string;
+  variableId?: string; // e.g. "{{full_name}}" or "{{logo}}"
   type: ElementType;
   content: string; // text content or image URL
   x: number;
@@ -19,7 +20,7 @@ export interface TemplateElement {
 }
 
 export interface PageSetup {
-  format: 'A4' | 'Letter' | 'Custom';
+  format: 'Certificate' | 'Card' | 'Custom';
   orientation: 'landscape' | 'portrait';
   width: number; // in pixels (at 96dpi or similar for preview)
   height: number;
@@ -53,7 +54,7 @@ interface EditorContextType {
 }
 
 const defaultPageSetup: PageSetup = {
-  format: 'A4',
+  format: 'Certificate',
   orientation: 'landscape',
   width: 1123, // A4 Landscape at 96 DPI: 1123x794
   height: 794,

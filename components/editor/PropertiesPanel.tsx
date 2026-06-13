@@ -181,6 +181,19 @@ export default function PropertiesPanel() {
           <>
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-1">
+                Variable ID
+              </label>
+              <input
+                onFocus={() => takeSnapshot()}
+                type="text"
+                value={selectedElement.variableId || ''}
+                readOnly
+                className="w-full text-sm text-gray-500 bg-gray-100 border border-gray-300 rounded p-2 cursor-not-allowed"
+                title="This determines the dynamic variable for JSON"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-900 mb-1">
                 Content
               </label>
               <textarea
@@ -269,20 +282,35 @@ export default function PropertiesPanel() {
         )}
 
         {selectedElement.type === 'image' && (
-          <div>
-            <label className="block text-sm font-medium text-gray-900 mb-1">
-              Image URL
-            </label>
-            <input
-              onFocus={() => takeSnapshot()}
-              type="text"
-              value={selectedElement.content}
-              onChange={(e) =>
-                updateElement(selectedElement.id, { content: e.target.value })
-              }
-              className="w-full text-sm text-gray-900 border border-gray-300 rounded p-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
+          <>
+            <div>
+              <label className="block text-sm font-medium text-gray-900 mb-1">
+                Variable ID
+              </label>
+              <input
+                onFocus={() => takeSnapshot()}
+                type="text"
+                value={selectedElement.variableId || ''}
+                readOnly
+                className="w-full text-sm text-gray-500 bg-gray-100 border border-gray-300 rounded p-2 cursor-not-allowed"
+                title="This determines the dynamic variable for JSON"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-900 mb-1">
+                Image URL
+              </label>
+              <input
+                onFocus={() => takeSnapshot()}
+                type="text"
+                value={selectedElement.content}
+                onChange={(e) =>
+                  updateElement(selectedElement.id, { content: e.target.value })
+                }
+                className="w-full text-sm text-gray-900 border border-gray-300 rounded p-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+          </>
         )}
 
         <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-gray-100">
