@@ -1,4 +1,4 @@
-# Certificate & Card Template Maker
+# CertiForge - Certificate & Card Template Maker
 
 A powerful, drag-and-drop web-based editor built with Next.js to design, configure, and export dynamic certificate and ID card templates.
 
@@ -10,7 +10,7 @@ A powerful, drag-and-drop web-based editor built with Next.js to design, configu
 - **Categorized Sidebar Components:** Over 35+ ready-to-use template fields grouped logically into Personal, Academic, Corporate, Result, Validation & Security categories.
 - **Advanced Properties Panel:** Fine-tune canvas backgrounds, font sizes, colors, text-alignment, bounds, and X/Y positioning in real-time.
 - **Undo/Redo History:** Includes a persistent timeline stack for safe template authoring with keyboard shortcuts built-in (`Ctrl+Z`, `Ctrl+Y`).
-- **Export Options:** 
+- **Export Options:**
   - Export layout coordinate configurations to **JSON** format.
   - Render the visual canvas directly to a high-quality **PDF**.
 
