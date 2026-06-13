@@ -42,8 +42,12 @@ export default function Home() {
   };
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center p-8 bg-gray-50 text-gray-900">
-      <h1 className="text-4xl font-bold mb-4">Certificate & Card Maker</h1>
+        <div className="flex-1 flex flex-col items-center justify-center p-8 bg-gray-50 text-gray-900">
+      <div className="mb-6 flex items-center justify-center">
+        <span className="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-500 tracking-tight drop-shadow-sm">
+          CertiForge
+        </span>
+      </div>
       <p className="text-lg text-gray-600 mb-8 max-w-2xl text-center">
         Create beautiful certificates, ID cards, office cards, and more with our
         perfect template making editor. Drag, drop, and export your designs

@@ -62,7 +62,7 @@ export default function Topbar() {
           <span>Home</span>
         </Link>
         <div className="h-6 w-px bg-gray-300"></div>
-        <h1 className="font-semibold text-lg text-gray-800">Template Editor</h1>
+        <h1 className="font-extrabold text-xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-500 tracking-tight">CertiForge</h1>
       </div>
 
       <div className="flex items-center gap-3">
